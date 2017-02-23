@@ -36,3 +36,22 @@ foreach ($images as $image) {
   // echo wp_get_attachment_image($image, 'large');
 }
 ```
+
+
+I forked this repo and could not get the above code to work for me to output the images. Everything else worked fine except the images were stored in a serialized array  which I needed to unserialize to get it to work properly. 
+
+Below is how I accessed the data for the images in my particular situation. 
+
+```php
+//Get all meta data on the page
+$custom_meta = get_post_custom($post->ID);
+
+//access the array for the data you want (vdw_gallery_id) and unserialize it
+$images = unserialize($custom_meta['vdw_gallery_id'][0]);
+
+//loop through and echo out your new unserialized array
+foreach ($images as $image) {
+    echo wp_get_attachment_image($image, 'large');
+}
+
+```
